@@ -20,8 +20,7 @@ import java.util.Objects;
 @RestController
 public class AirportController {
 
-    @Autowired
-    Service service;
+    Service service = new Service();
     @PostMapping("/add_airport")
     public String addAirport(@RequestBody Airport airport){
 
@@ -35,7 +34,6 @@ public class AirportController {
 
         //Largest airport is in terms of terminals. 3 terminal airport is larger than 2 terminal airport
         //Incase of a tie return the Lexicographically smallest airportName
-
        return service.getLargestAirportName();
     }
 
@@ -124,8 +122,7 @@ public class AirportController {
         //Calculate the total revenue that a flight could have
         //That is of all the passengers that have booked a flight till now and then calculate the revenue
         //Revenue will also decrease if some passenger cancels the flight
-
-
+        System.out.println(flightId);
         return service.calculateRevenueOfAFlight(flightId);
     }
 

@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-
-@org.springframework.stereotype.Repository
 public class Repository {
 
     HashMap<String,Airport> airportsMap;
@@ -20,7 +18,13 @@ public class Repository {
 
 
 
-
+    public Repository(){
+        airportsMap = new HashMap<>();
+        flightsMap = new HashMap<>();
+        passengerHashMap = new HashMap<>();
+        bookingHashMap = new HashMap<>();
+        seatsMap = new HashMap<>();
+    }
 
 
 
@@ -36,7 +40,10 @@ public class Repository {
 
         //Largest airport is in terms of terminals. 3 terminal airport is larger than 2 terminal airport
         //Incase of a tie return the Lexicographically smallest airportName
-        List<Airport> airportList = (List<Airport>) airportsMap.values();
+        List<Airport> airportList = new ArrayList<>();
+        for(Airport airport:airportsMap.values()){
+            airportList.add(airport);
+        }
         if(airportList.size()==0){
             return "";
         }
@@ -61,7 +68,7 @@ public class Repository {
         //Find the duration by finding the shortest flight that connects these 2 cities directly
         //If there is no direct flight between 2 cities return -1.
         double result = -1;
-        for(Flight flight:(List<Flight>)flightsMap.values()){
+        for(Flight flight:flightsMap.values()){
             if(fromCity.equals(flight.getFromCity()) && toCity.equals(flight.getToCity())){
                 if(result==-1){
                     result = flight.getDuration();
@@ -102,6 +109,10 @@ public class Repository {
         //Price for any flight will be : 3000 + noOfPeopleWhoHaveAlreadyBooked*50
         //Suppose if 2 people have booked the flight already : the price of flight for the third person will be 3000 + 2*50 = 3100
         //This will not include the current person who is trying to book, he might also be just checking price
+        Integer p = seatsMap.get(flightId);
+        if(p==null){
+            return 3000;
+        }
         return 3000+50*seatsMap.get(flightId);
 
     }
@@ -167,6 +178,9 @@ public class Repository {
     public int countOfBookingsDoneByPassengerAllCombined(Integer passengerId){
 
         //Tell the count of flight bookings done by a passenger: This will tell the total count of flight bookings done by a passenger :
+        if(bookingHashMap.get(passengerId)==null){
+            return 0;
+        }
         return bookingHashMap.get(passengerId).size();
     }
 
@@ -200,7 +214,10 @@ public class Repository {
         //Calculate the total revenue that a flight could have
         //That is of all the passengers that have booked a flight till now and then calculate the revenue
         //Revenue will also decrease if some passenger cancels the flight
-        int k = seatsMap.get(flightId);
+        Integer k = seatsMap.get(flightId);
+        if(k==null){
+            return 0;
+        }
         return (k*3000) + (50*(((k-1)*(k)))/2);
     }
 
