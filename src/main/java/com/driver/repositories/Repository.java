@@ -88,7 +88,7 @@ public class Repository {
         Integer curr = 0;
         Airport airport = airportsMap.get(airportName);
         for(Flight flight:flightsMap.values()){
-            if(flight.getFlightDate().equals(date) && airport!=null && airport.getCity().equals(flight.getFromCity())){
+            if(flight.getFlightDate().equals(date) && airport!=null && (airport.getCity().equals(flight.getFromCity()) || airport.getCity().equals(flight.getToCity()))){
                 curr += seatsMap.get(flight.getFlightId());
             }
         }
