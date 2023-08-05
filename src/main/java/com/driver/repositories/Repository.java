@@ -85,9 +85,10 @@ public class Repository {
 
         //Calculate the total number of people who have flights on that day on a particular airport
         //This includes both the people who have come for a flight and who have landed on an airport after their flight
-        int curr = 0;
+        Integer curr = 0;
+        Airport airport = airportsMap.get(airportName);
         for(Flight flight:flightsMap.values()){
-            if(flight.getFlightDate().equals(date)){
+            if(flight.getFlightDate().equals(date) && airport!=null && airport.getCity().equals(flight.getFromCity())){
                 curr += seatsMap.get(flight.getFlightId());
             }
         }
@@ -99,7 +100,7 @@ public class Repository {
         //Add a passenger to the database
         //And return a "SUCCESS" message if the passenger has been added successfully.
         passengerHashMap.put(passenger.getPassengerId(),passenger);
-        return "Success";
+        return "SUCCESS";
     }
 
 
