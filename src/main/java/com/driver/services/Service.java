@@ -32,6 +32,10 @@ public class Service {
         return repository.getLargestAirportName();
     }
 
+    public int countOfBookingsDoneByPassengerAllCombined(int passengerId){
+        return countOfBookingsDoneByPassengerAllCombined(passengerId);
+    }
+
     public double getShortestDurationOfPossibleBetweenTwoCities(City fromCity,City toCity){
 
         //Find the duration by finding the shortest flight that connects these 2 cities directly

@@ -95,6 +95,7 @@ public class Repository {
         return "Success";
     }
 
+
     public int calculateFlightFare(Integer flightId){
 
         //Calculation of flight prices is a function of number of people who have booked the flight already.
@@ -133,6 +134,12 @@ public class Repository {
             seatsMap.put(flightId,1);
         }
         return "SUCCESS";
+    }
+    public int countOfBookingsDoneByPassengerAllCombined(int passengerId){
+        if(bookingHashMap.containsKey(passengerId))
+        return bookingHashMap.get(passengerId).size();
+
+        return 0;
     }
 
     public String cancelATicket(Integer flightId,Integer passengerId){
